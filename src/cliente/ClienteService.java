@@ -79,23 +79,11 @@ public class ClienteService {
     // A INTENÇÃO DESSA PARTE
     //É GERAR A ID DOS CLIENTES AUTOMATICAMENTE
 
-    private int proximoId = 1; // Começa em 1
 
-    private Cliente definirId(Cliente cliente) {
-        Cliente novoCliente;
 
-        if (cliente instanceof ClientePadrao) {
-            novoCliente = new ClientePadrao(proximoId++, cliente.getNome(), cliente.getEmail(), cliente.getTelefone());
-        } else if (cliente instanceof ClientePremium) {
-            novoCliente = new ClientePremium(proximoId++, cliente.getNome(), cliente.getEmail(), cliente.getTelefone());
-        } else {
-            novoCliente = new ClienteDeluxe(proximoId++, cliente.getNome(), cliente.getEmail(), cliente.getTelefone());
-        }
-
-        return novoCliente;
     }
 
 
 
-}
+
 

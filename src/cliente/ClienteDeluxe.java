@@ -2,7 +2,12 @@ package cliente;
 
 public class ClienteDeluxe extends Cliente implements ServicosAdicionais {
     public ClienteDeluxe(int id, String nome, String email, String telefone) {
-        super(id, nome, email, telefone);
+        super(id, nome, email, telefone, 250.0);
+    }
+
+    @Override
+    public String getTipo(){
+        return "Deluxe";
     }
 
     @Override

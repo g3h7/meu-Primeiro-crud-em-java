@@ -2,7 +2,7 @@ package cliente;
 
 public class ClientePremium extends Cliente implements ServicosAdicionais {
     public ClientePremium(int id, String nome, String email, String telefone) {
-        super(id, nome, email, telefone);
+        super(id, nome, email, telefone, 180.0);
     }
 
     @Override
@@ -25,5 +25,10 @@ public class ClientePremium extends Cliente implements ServicosAdicionais {
     public void acessoAulasAdicionais(){
         System.out.println(nome + "NAO tem aulas adicionais.");
 
+    }
+
+    @Override
+    public  String getTipo(){
+        return "Premium";
     }
 }

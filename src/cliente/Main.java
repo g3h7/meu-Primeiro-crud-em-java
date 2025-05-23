@@ -90,7 +90,7 @@ public class Main {
         service.cadastrarCliente(cliente);
     }
 
-    // Método auxiliar para atualizar cliente
+    // Metodo auxiliar para atualizar cliente
     public static void atualizarCliente(Scanner scanner, ClienteService service) {
         System.out.print("Digite o ID do cliente que deseja atualizar: ");
         int id = scanner.nextInt();
@@ -108,7 +108,7 @@ public class Main {
         service.atualizarCliente(id, nome, email, telefone);
     }
 
-    // Método auxiliar para remover cliente
+    // Metodo auxiliar para remover cliente
     public static void removerCliente(Scanner scanner, ClienteService service) {
         System.out.print("Digite o ID do cliente que deseja remover: ");
         int id = scanner.nextInt();
