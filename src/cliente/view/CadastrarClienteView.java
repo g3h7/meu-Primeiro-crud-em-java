@@ -10,12 +10,13 @@ import java.awt.event.ItemListener;
 public class CadastrarClienteView extends JFrame {
     private JTextField campoId, campoNome, campoEmail, campoTelefone;
     private JComboBox<String> comboTipo;
-    private JLabel valorPreco; // NOVO
+    private JCheckBox checkNutricionista; // NOVO
+    private JLabel valorPreco;
     private ClienteService clienteService = SistemaAcademia.getClienteService();
 
     public CadastrarClienteView() {
         setTitle("Cadastrar Novo Cliente");
-        setSize(400, 400);
+        setSize(400, 450); // aumentei altura
         setLocationRelativeTo(null);
         setLayout(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -60,33 +61,29 @@ public class CadastrarClienteView extends JFrame {
         comboTipo.setBounds(150, 180, 200, 25);
         add(comboTipo);
 
+        // CHECKBOX: Nutricionista
+        checkNutricionista = new JCheckBox("Incluir Acesso ao Nutricionista (R$ 50,00)");
+        checkNutricionista.setBounds(30, 220, 320, 25);
+        add(checkNutricionista);
+
         // LABEL DE PREÇO
         JLabel labelPreco = new JLabel("Preço Total:");
-        labelPreco.setBounds(30, 220, 100, 25);
+        labelPreco.setBounds(30, 260, 100, 25);
         add(labelPreco);
 
         valorPreco = new JLabel("R$ 0,00");
-        valorPreco.setBounds(150, 220, 200, 25);
+        valorPreco.setBounds(150, 260, 200, 25);
         add(valorPreco);
 
-        // Atualiza preço ao mudar tipo
-        comboTipo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                atualizarPreco();
-            }
-        });
+        // Atualiza preço ao mudar tipo ou marcar nutricionista
+        comboTipo.addActionListener(e -> atualizarPreco());
+        checkNutricionista.addActionListener(e -> atualizarPreco());
 
         JButton btnCadastrar = new JButton("Cadastrar");
-        btnCadastrar.setBounds(150, 270, 120, 30);
+        btnCadastrar.setBounds(150, 310, 120, 30);
         add(btnCadastrar);
 
-        btnCadastrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cadastrarCliente();
-            }
-        });
+        btnCadastrar.addActionListener(e -> cadastrarCliente());
     }
 
     private void atualizarPreco() {
@@ -105,6 +102,10 @@ public class CadastrarClienteView extends JFrame {
                 break;
         }
 
+        if (checkNutricionista.isSelected()) {
+            preco += 50.0;
+        }
+
         valorPreco.setText("R$ " + preco);
     }
 
@@ -115,6 +116,7 @@ public class CadastrarClienteView extends JFrame {
             String email = campoEmail.getText();
             String telefone = campoTelefone.getText();
             String tipoSelecionado = (String) comboTipo.getSelectedItem();
+            boolean nutricionista = checkNutricionista.isSelected();
 
             if (tipoSelecionado.equals("Selecione o tipo...")) {
                 JOptionPane.showMessageDialog(this, "Por favor, selecione um tipo de cliente válido.");
@@ -125,21 +127,21 @@ public class CadastrarClienteView extends JFrame {
 
             switch (tipoSelecionado) {
                 case "Padrão":
-                    cliente = new ClientePadrao(id, nome, email, telefone);
+                    cliente = new ClientePadrao(id, nome, email, telefone, nutricionista);
                     break;
                 case "Premium":
-                    cliente = new ClientePremium(id, nome, email, telefone);
+                    cliente = new ClientePremium(id, nome, email, telefone, nutricionista);
                     break;
                 case "Deluxe":
-                    cliente = new ClienteDeluxe(id, nome, email, telefone);
+                    cliente = new ClienteDeluxe(id, nome, email, telefone, nutricionista);
                     break;
                 default:
-                    throw new IllegalArgumentException("TIPO INVÁLIDO");
+                    throw new IllegalArgumentException("Tipo inválido");
             }
 
             clienteService.cadastrarCliente(cliente);
             JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!");
-            dispose(); // FECHA A JANELA
+            dispose(); // fecha janela
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "ID deve ser um número inteiro.");
@@ -148,3 +150,4 @@ public class CadastrarClienteView extends JFrame {
         }
     }
 }
+

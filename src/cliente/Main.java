@@ -70,22 +70,27 @@ public class Main {
         int tipo = scanner.nextInt();
         scanner.nextLine();
 
+        System.out.print("Deseja incluir acesso ao nutricionista? (s/n): ");
+        String respNutri = scanner.nextLine().trim().toLowerCase();
+        boolean incluiNutricionista = respNutri.equals("s");
+
         Cliente cliente;
 
         switch (tipo) {
             case 1:
-                cliente = new ClientePadrao(id, nome, email, telefone);
+                cliente = new ClientePadrao(id, nome, email, telefone, incluiNutricionista);
                 break;
             case 2:
-                cliente = new ClientePremium(id, nome, email, telefone);
+                cliente = new ClientePremium(id, nome, email, telefone, incluiNutricionista);
                 break;
             case 3:
-                cliente = new ClienteDeluxe(id, nome, email, telefone);
+                cliente = new ClienteDeluxe(id, nome, email, telefone, incluiNutricionista);
                 break;
             default:
                 System.out.println("Tipo inválido.");
                 return;
         }
+
 
         service.cadastrarCliente(cliente);
     }

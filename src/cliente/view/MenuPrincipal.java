@@ -1,12 +1,4 @@
 package cliente.view;
-import cliente.ClienteService;
-import cliente.ClientePadrao;
-import cliente.ClientePremium;
-import cliente.ClienteDeluxe;
-import cliente.SistemaAcademia;
-import cliente.Cliente;
-import cliente.view.AtualizarRemoverView;
-
 
 
 import javax.swing.*;
